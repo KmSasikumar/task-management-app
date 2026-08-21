@@ -8,6 +8,16 @@ export const api = {
     if (!res.ok) throw new Error('Failed to login');
     return res.json();
   },
+
+  async updateUser(id: string, user: Partial<User>): Promise<User> {
+    const res = await fetch(`${API_URL}/users/${id}`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(user),
+    });
+    if (!res.ok) throw new Error('Failed to update user');
+    return res.json();
+  },
   
   async getTasks(): Promise<Task[]> {
     const res = await fetch(`${API_URL}/tasks`);

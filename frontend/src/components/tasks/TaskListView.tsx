@@ -68,26 +68,30 @@ function StatusGroup({
         <span className="text-sm font-semibold text-text-primary">{config.label}</span>
       </button>
 
+      {/* Table Header (Outside the box) */}
       {!collapsed && (
-        <div className="border border-border rounded-xl overflow-hidden">
-          {/* Table Header */}
-          <div className="flex items-center bg-bg-secondary px-4 py-2.5 border-b border-border text-xs font-medium text-text-secondary uppercase tracking-wider">
-            <div className="flex-1 min-w-[200px]">Task</div>
-            {fieldVisibility.priority && <div className="w-[120px]">Priority</div>}
-            {fieldVisibility.members && <div className="w-[120px]">Members</div>}
-            {fieldVisibility.dueDate && <div className="w-[140px]">Due Date</div>}
-            <div className="w-[80px] text-right">Actions</div>
-          </div>
+        <div className="flex items-center px-4 py-2 text-xs font-medium text-text-tertiary uppercase tracking-wider">
+          <div className="flex-1 min-w-[200px]">Task</div>
+          {fieldVisibility.priority && <div className="w-[120px]">Priority</div>}
+          {fieldVisibility.members && <div className="w-[120px]">Members</div>}
+          {fieldVisibility.dueDate && <div className="w-[140px]">Due Date</div>}
+          <div className="w-[80px] text-right">Actions</div>
+        </div>
+      )}
 
+      {!collapsed && (
+        <div className="border border-border rounded-xl overflow-hidden bg-bg-primary shadow-sm">
           {/* Rows */}
           {tasks.length === 0 ? (
-            <div className="px-4 py-6 text-sm text-text-tertiary text-center">No tasks</div>
+            <div className="flex items-center px-4 py-3 border-b border-border-light text-sm text-text-tertiary">
+              <div className="flex-1 text-center">No tasks</div>
+            </div>
           ) : (
             tasks.map(task => (
               <Link
                 key={task.id}
                 href={`/tasks/${task.id}`}
-                className="flex items-center px-4 py-3 border-b border-border-light last:border-b-0 hover:bg-bg-hover transition-colors group"
+                className="flex items-center px-4 py-3 border-b border-border-light hover:bg-bg-hover transition-colors group"
               >
                 <div className="flex-1 min-w-[200px] text-sm font-medium text-text-primary group-hover:text-accent transition-colors">{task.title}</div>
                 {fieldVisibility.priority && (

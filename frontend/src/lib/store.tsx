@@ -7,12 +7,12 @@ import type { AppState, Task, Project, User, Status, ViewMode, ThemeMode, Accent
 
 const defaultUser: User = {
   id: 'u1',
-  name: 'Dexter',
-  email: 'dexter@gmail.com',
+  name: 'Sasikumar',
+  email: 'Sasikumar@gmail.com',
   avatar: '',
-  title: 'Designer',
-  username: 'Dexuser',
-  initials: 'DX',
+  title: 'Developer',
+  username: 'Sasikumar',
+  initials: 'S',
 };
 
 const seedMembers: Record<string, User> = {
@@ -254,6 +254,10 @@ export function AppProvider({ children }: { children: ReactNode }) {
           await api.deleteTask(action.payload);
         } else if (action.type === 'UPDATE_TASK_STATUS') {
           await api.updateTask(action.payload.taskId, { status: action.payload.status });
+        } else if (action.type === 'UPDATE_USER') {
+          if (state.user.id) {
+            await api.updateUser(state.user.id, action.payload);
+          }
         }
       } catch (err) {
         console.error('API Sync Error', err);

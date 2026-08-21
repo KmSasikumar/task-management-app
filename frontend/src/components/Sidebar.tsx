@@ -98,69 +98,6 @@ export default function Sidebar() {
 
             {/* Menu items */}
             <div className="py-2 px-2">
-              {/* Theme */}
-              <div className="relative">
-                <button
-                  onClick={() => { setThemeOpen(!themeOpen); setColorOpen(false); }}
-                  className="flex items-center gap-2.5 w-full px-3 py-2 rounded-lg text-sm text-text-primary hover:bg-bg-hover transition-colors"
-                >
-                  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}>
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.066 2.573c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.573 1.066c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.066-2.573c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/>
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
-                  </svg>
-                  Change Theme
-                  <svg className="w-3.5 h-3.5 ml-auto text-text-tertiary" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7"/></svg>
-                </button>
-                {themeOpen && (
-                  <div className="absolute left-full top-0 ml-1 bg-bg-primary border border-border rounded-xl shadow-lg p-2 min-w-[140px] animate-scaleIn">
-                    <p className="px-3 py-1 text-xs font-medium text-text-tertiary">Theme</p>
-                    {(['light', 'dark'] as ThemeMode[]).map(t => (
-                      <button
-                        key={t}
-                        onClick={() => { dispatch({ type: 'SET_THEME', payload: t }); setThemeOpen(false); }}
-                        className="flex items-center gap-2 w-full px-3 py-1.5 rounded-lg text-sm hover:bg-bg-hover transition-colors"
-                      >
-                        {t === 'light' ? (
-                          <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
-                        ) : (
-                          <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
-                        )}
-                        <span className="capitalize">{t}</span>
-                        {state.theme === t && <svg className="w-4 h-4 ml-auto text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7"/></svg>}
-                      </button>
-                    ))}
-                  </div>
-                )}
-              </div>
-
-              {/* Color */}
-              <div className="relative">
-                <button
-                  onClick={() => { setColorOpen(!colorOpen); setThemeOpen(false); }}
-                  className="flex items-center gap-2.5 w-full px-3 py-2 rounded-lg text-sm text-text-primary hover:bg-bg-hover transition-colors"
-                >
-                  <div className={`w-4 h-4 rounded ${accentColors.find(c => c.key === state.accentColor)?.color || 'bg-gray-400'}`} />
-                  Color Mode
-                  <svg className="w-3.5 h-3.5 ml-auto text-text-tertiary" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7"/></svg>
-                </button>
-                {colorOpen && (
-                  <div className="absolute left-full top-0 ml-1 bg-bg-primary border border-border rounded-xl shadow-lg p-2 min-w-[150px] animate-scaleIn">
-                    <p className="px-3 py-1 text-xs font-medium text-text-tertiary">Color Mode</p>
-                    {accentColors.map(c => (
-                      <button
-                        key={c.key}
-                        onClick={() => { dispatch({ type: 'SET_ACCENT', payload: c.key }); setColorOpen(false); }}
-                        className="flex items-center gap-2.5 w-full px-3 py-1.5 rounded-lg text-sm hover:bg-bg-hover transition-colors"
-                      >
-                        <div className={`w-3.5 h-3.5 rounded ${c.color}`} />
-                        {c.label}
-                        {state.accentColor === c.key && <svg className="w-4 h-4 ml-auto text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7"/></svg>}
-                      </button>
-                    ))}
-                  </div>
-                )}
-              </div>
-
               {/* Settings */}
               <button
                 onClick={() => { setProfileOpen(false); router.push('/settings'); }}

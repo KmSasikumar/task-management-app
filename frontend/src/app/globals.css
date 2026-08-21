@@ -1,0 +1,165 @@
+@import "tailwindcss";
+
+/* ── Accent Color Palettes ─────────────────────────────────────────────── */
+:root,
+[data-theme="light"] {
+  --bg-primary: #ffffff;
+  --bg-secondary: #f9fafb;
+  --bg-tertiary: #f3f4f6;
+  --bg-hover: #f3f4f6;
+  --border-color: #e5e7eb;
+  --border-light: #f0f0f0;
+  --text-primary: #111827;
+  --text-secondary: #6b7280;
+  --text-tertiary: #9ca3af;
+  --text-on-accent: #ffffff;
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.07), 0 2px 4px -2px rgba(0,0,0,0.05);
+  --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.08), 0 4px 6px -4px rgba(0,0,0,0.04);
+  --shadow-xl: 0 20px 25px -5px rgba(0,0,0,0.08), 0 8px 10px -6px rgba(0,0,0,0.04);
+}
+
+[data-theme="dark"] {
+  --bg-primary: #0f0f0f;
+  --bg-secondary: #1a1a1a;
+  --bg-tertiary: #262626;
+  --bg-hover: #2a2a2a;
+  --border-color: #333333;
+  --border-light: #2a2a2a;
+  --text-primary: #f3f4f6;
+  --text-secondary: #9ca3af;
+  --text-tertiary: #6b7280;
+  --text-on-accent: #ffffff;
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.3);
+  --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.4);
+  --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.4);
+  --shadow-xl: 0 20px 25px -5px rgba(0,0,0,0.5);
+}
+
+/* Accent Colors */
+[data-accent="amber"] {
+  --accent: #f59e0b;
+  --accent-hover: #d97706;
+  --accent-light: #fef3c7;
+  --accent-bg: #fffbeb;
+  --accent-border: #fde68a;
+}
+[data-accent="blue"] {
+  --accent: #3b82f6;
+  --accent-hover: #2563eb;
+  --accent-light: #dbeafe;
+  --accent-bg: #eff6ff;
+  --accent-border: #93c5fd;
+}
+[data-accent="pink"] {
+  --accent: #ec4899;
+  --accent-hover: #db2777;
+  --accent-light: #fce7f3;
+  --accent-bg: #fdf2f8;
+  --accent-border: #f9a8d4;
+}
+[data-accent="rose"] {
+  --accent: #f43f5e;
+  --accent-hover: #e11d48;
+  --accent-light: #ffe4e6;
+  --accent-bg: #fff1f2;
+  --accent-border: #fda4af;
+}
+[data-accent="emerald"] {
+  --accent: #10b981;
+  --accent-hover: #059669;
+  --accent-light: #d1fae5;
+  --accent-bg: #ecfdf5;
+  --accent-border: #6ee7b7;
+}
+[data-accent="black"] {
+  --accent: #1f2937;
+  --accent-hover: #111827;
+  --accent-light: #f3f4f6;
+  --accent-bg: #f9fafb;
+  --accent-border: #d1d5db;
+}
+
+/* ── Tailwind Theme Inline ─────────────────────────────────────────────── */
+@theme inline {
+  --color-background: var(--bg-primary);
+  --color-foreground: var(--text-primary);
+  --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
+  --color-accent-light: var(--accent-light);
+  --color-accent-bg: var(--accent-bg);
+  --color-bg-primary: var(--bg-primary);
+  --color-bg-secondary: var(--bg-secondary);
+  --color-bg-tertiary: var(--bg-tertiary);
+  --color-bg-hover: var(--bg-hover);
+  --color-border: var(--border-color);
+  --color-border-light: var(--border-light);
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-text-tertiary: var(--text-tertiary);
+  --color-priority-urgent: #ef4444;
+  --color-priority-high: #f97316;
+  --color-priority-medium: #eab308;
+  --color-priority-low: #9ca3af;
+  --color-status-backlog: #f97316;
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+/* ── Base Styles ───────────────────────────────────────────────────────── */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: var(--font-geist-sans), system-ui, -apple-system, sans-serif;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+/* ── Scrollbar ─────────────────────────────────────────────────────────── */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-tertiary);
+}
+
+/* ── Animations ────────────────────────────────────────────────────────── */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.animate-fadeIn { animation: fadeIn 0.2s ease-out; }
+.animate-slideDown { animation: slideDown 0.2s ease-out; }
+.animate-scaleIn { animation: scaleIn 0.15s ease-out; }
+
+/* ── Drag & Drop ───────────────────────────────────────────────────────── */
+.dragging {
+  opacity: 0.5;
+  transform: rotate(2deg);
+}
+.drag-over {
+  border: 2px dashed var(--accent) !important;
+  background: var(--accent-bg) !important;
+}

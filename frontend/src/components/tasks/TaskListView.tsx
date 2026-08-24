@@ -1,7 +1,8 @@
 'use client';
 
+import { useState } from 'react';
 import Link from 'next/link';
-import type { Task, Status } from '@/lib/types';
+import type { Task, Status, FieldVisibility } from '@/lib/types';
 import { useApp } from '@/lib/store';
 import PriorityBadge from '@/components/ui/PriorityBadge';
 import Avatar from '@/components/ui/Avatar';
@@ -50,7 +51,7 @@ function StatusGroup({
   status: Status;
   config: { label: string; color: string };
   tasks: Task[];
-  fieldVisibility: typeof import('@/lib/types').FieldVisibility extends never ? never : { priority: boolean; members: boolean; dueDate: boolean; labels: boolean; status: boolean; reporter: boolean };
+  fieldVisibility: FieldVisibility;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   dispatch: React.Dispatch<any>;
 }) {
@@ -146,5 +147,3 @@ function StatusGroup({
   );
 }
 
-// Need useState import
-import { useState } from 'react';

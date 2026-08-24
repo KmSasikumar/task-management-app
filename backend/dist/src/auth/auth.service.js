@@ -51,18 +51,6 @@ let AuthService = class AuthService {
     constructor(usersService) {
         this.usersService = usersService;
     }
-    async guestLogin() {
-        let guestUser = await this.usersService.findByEmail('guest@pyramid.com');
-        if (!guestUser) {
-            guestUser = await this.usersService.create({
-                name: 'Guest User',
-                email: 'guest@pyramid.com',
-                initials: 'GU',
-                username: 'guestuser'
-            });
-        }
-        return guestUser;
-    }
     async signup(email, pass, name) {
         const existing = await this.usersService.findByEmail(email);
         if (existing) {

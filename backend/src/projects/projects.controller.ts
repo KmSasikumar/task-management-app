@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Param, Put, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Put, Delete, Headers } from '@nestjs/common';
 import { ProjectsService } from './projects.service';
 import { Prisma } from '@prisma/client';
 
@@ -7,8 +7,8 @@ export class ProjectsController {
   constructor(private readonly projectsService: ProjectsService) {}
 
   @Get()
-  findAll() {
-    return this.projectsService.findAll();
+  findAll(@Headers('x-user-id') userId?: string) {
+    return this.projectsService.findAll(userId);
   }
 
   @Get(':id')
@@ -17,7 +17,10 @@ export class ProjectsController {
   }
 
   @Post()
-  create(@Body() data: Prisma.ProjectCreateInput) {
+  create(@Body() data: Prisma.ProjectCreateInput, @Headers('x-user-id') userId?: string) {
+    if (userId) {
+      data.lead = { connect: { id: userId } };
+    }
     return this.projectsService.create(data);
   }
 

@@ -21,13 +21,16 @@ let TasksController = class TasksController {
     constructor(tasksService) {
         this.tasksService = tasksService;
     }
-    findAll(projectId) {
-        return this.tasksService.findAll(projectId);
+    findAll(projectId, userId) {
+        return this.tasksService.findAll(projectId, userId);
     }
     findOne(id) {
         return this.tasksService.findOne(id);
     }
-    create(data) {
+    create(data, userId) {
+        if (userId) {
+            data.reporter = { connect: { id: userId } };
+        }
         return this.tasksService.create(data);
     }
     update(id, data) {
@@ -41,8 +44,9 @@ exports.TasksController = TasksController;
 __decorate([
     (0, common_1.Get)(),
     __param(0, (0, common_1.Query)('projectId')),
+    __param(1, (0, common_1.Headers)('x-user-id')),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String]),
+    __metadata("design:paramtypes", [String, String]),
     __metadata("design:returntype", void 0)
 ], TasksController.prototype, "findAll", null);
 __decorate([
@@ -55,8 +59,9 @@ __decorate([
 __decorate([
     (0, common_1.Post)(),
     __param(0, (0, common_1.Body)()),
+    __param(1, (0, common_1.Headers)('x-user-id')),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
+    __metadata("design:paramtypes", [Object, String]),
     __metadata("design:returntype", void 0)
 ], TasksController.prototype, "create", null);
 __decorate([

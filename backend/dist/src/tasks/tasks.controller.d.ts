@@ -3,7 +3,7 @@ import { Prisma } from '@prisma/client';
 export declare class TasksController {
     private readonly tasksService;
     constructor(tasksService: TasksService);
-    findAll(projectId?: string): Promise<({
+    findAll(projectId?: string, userId?: string): Promise<({
         comments: ({
             user: {
                 id: string;
@@ -135,7 +135,7 @@ export declare class TasksController {
         reporterId: string | null;
         projectId: string | null;
     }>;
-    create(data: Prisma.TaskCreateInput): Promise<{
+    create(data: Prisma.TaskCreateInput, userId?: string): Promise<{
         comments: {
             id: string;
             createdAt: Date;

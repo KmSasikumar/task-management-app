@@ -22,73 +22,8 @@ const seedMembers: Record<string, User> = {
   u4: { id: 'u4', name: 'Sarah Park', email: 'sarah@gmail.com', avatar: '', title: 'DevOps', username: 'sarah', initials: 'SP' },
 };
 
-const seedTasks: Task[] = [
-  {
-    id: 't1', title: 'Write API Documentation', description: 'Create clear and detailed API documentation to guide developers in using the inventory and sales metrics features effectively.', status: 'todo', priority: 'urgent', members: ['u1'], dueDate: '2026-07-29', labels: ['Research', 'Design', 'Development', 'Testing', 'Deployment'], reporter: 'u1', projectId: 'p1', createdAt: '2026-07-20T10:00:00Z', updatedAt: '2026-08-21T10:00:00Z',
-    subtasks: [
-      { id: 'st1', title: 'Subtask 1', priority: 'high', members: ['u1'], dueDate: '2026-09-12', status: 'todo' },
-      { id: 'st2', title: 'Subtask 2', priority: 'low', members: ['u3'], dueDate: '2026-09-15', status: 'doing' },
-      { id: 'st3', title: 'Subtask 3', priority: 'medium', members: [], dueDate: '2026-09-18', status: 'todo' },
-    ],
-    comments: [
-      { id: 'c1', userId: 'u2', userName: 'Ankit Dutta', userAvatar: '', content: 'dsds', createdAt: '2026-08-21T14:00:00Z' },
-    ],
-  },
-  {
-    id: 't2', title: 'Implement Search Function', description: 'Add full-text search across tasks and projects.', status: 'todo', priority: 'high', members: ['u1'], dueDate: '2026-07-29', labels: ['Deployment'], reporter: 'u1', projectId: null, createdAt: '2026-07-21T10:00:00Z', updatedAt: '2026-07-21T10:00:00Z',
-    subtasks: [], comments: [],
-  },
-  {
-    id: 't3', title: 'Deploy to Production', description: 'Final deployment of the current sprint.', status: 'todo', priority: 'medium', members: ['u1'], dueDate: '2026-07-29', labels: ['Deployment'], reporter: 'u1', projectId: null, createdAt: '2026-07-22T10:00:00Z', updatedAt: '2026-07-22T10:00:00Z',
-    subtasks: [], comments: [],
-  },
-  {
-    id: 't4', title: 'Code Review Completed', description: 'All code has been reviewed for the sprint.', status: 'doing', priority: 'high', members: ['u1'], dueDate: '2026-07-29', labels: ['Deployment'], reporter: 'u2', projectId: null, createdAt: '2026-07-23T10:00:00Z', updatedAt: '2026-07-23T10:00:00Z',
-    subtasks: [], comments: [],
-  },
-  {
-    id: 't5', title: 'Design Mockups Finalized', description: 'Design mockups are complete and ready for dev.', status: 'doing', priority: 'medium', members: ['u1'], dueDate: '2026-07-29', labels: ['Deployment'], reporter: 'u1', projectId: null, createdAt: '2026-07-24T10:00:00Z', updatedAt: '2026-07-24T10:00:00Z',
-    subtasks: [], comments: [],
-  },
-  {
-    id: 't6', title: 'Feature Testing Passed', description: 'QA testing complete.', status: 'completed', priority: 'high', members: ['u3'], dueDate: '2026-07-30', labels: ['Testing', 'Passed'], reporter: 'u3', projectId: null, createdAt: '2026-07-25T10:00:00Z', updatedAt: '2026-07-25T10:00:00Z',
-    subtasks: [], comments: [],
-  },
-  {
-    id: 't7', title: 'UI Design Updated', description: 'Updated all UI components.', status: 'completed', priority: 'medium', members: ['u1'], dueDate: '2026-07-31', labels: ['Design', 'Updated'], reporter: 'u1', projectId: null, createdAt: '2026-07-26T10:00:00Z', updatedAt: '2026-07-26T10:00:00Z',
-    subtasks: [], comments: [],
-  },
-  {
-    id: 't8', title: 'Security Audit Scheduled', description: 'Security audit for Q3.', status: 'completed', priority: 'urgent', members: ['u4'], dueDate: '2026-08-01', labels: ['Audit', 'Scheduled'], reporter: 'u4', projectId: null, createdAt: '2026-07-27T10:00:00Z', updatedAt: '2026-07-27T10:00:00Z',
-    subtasks: [], comments: [],
-  },
-  {
-    id: 't9', title: 'Design Homepage', description: 'Create the homepage design.', status: 'todo', priority: 'high', members: ['u1'], dueDate: '2026-09-12', labels: ['Design'], reporter: 'u1', projectId: 'p1', createdAt: '2026-08-01T10:00:00Z', updatedAt: '2026-08-01T10:00:00Z',
-    subtasks: [], comments: [],
-  },
-  {
-    id: 't10', title: 'Develop Login Feature', description: 'Implement login/auth flow.', status: 'todo', priority: 'low', members: ['u3'], dueDate: '2026-09-15', labels: ['Development'], reporter: 'u3', projectId: 'p1', createdAt: '2026-08-02T10:00:00Z', updatedAt: '2026-08-02T10:00:00Z',
-    subtasks: [], comments: [],
-  },
-  {
-    id: 't11', title: 'Test Payment Gateway', description: 'Run payment tests.', status: 'todo', priority: 'medium', members: [], dueDate: '2026-09-18', labels: ['Testing'], reporter: 'u1', projectId: 'p1', createdAt: '2026-08-03T10:00:00Z', updatedAt: '2026-08-03T10:00:00Z',
-    subtasks: [], comments: [],
-  },
-  {
-    id: 't12', title: 'UI Review Pending', description: 'UI design review.', status: 'on-hold', priority: 'high', members: ['u1'], dueDate: '2026-08-05', labels: ['Design', 'Review'], reporter: 'u1', projectId: null, createdAt: '2026-07-28T10:00:00Z', updatedAt: '2026-07-28T10:00:00Z',
-    subtasks: [], comments: [],
-  },
-  {
-    id: 't13', title: 'Backend Integration', description: 'Backend API integration.', status: 'on-hold', priority: 'medium', members: ['u2'], dueDate: '2026-08-10', labels: ['Development'], reporter: 'u2', projectId: null, createdAt: '2026-07-29T10:00:00Z', updatedAt: '2026-07-29T10:00:00Z',
-    subtasks: [], comments: [],
-  },
-];
-
-const seedProjects: Project[] = [
-  { id: 'p1', name: 'Design Homepage', priority: 'high', lead: 'u1', dueDate: '2026-09-12', members: ['u1', 'u3'], createdAt: '2026-08-01T10:00:00Z' },
-  { id: 'p2', name: 'Develop Login Feature', priority: 'low', lead: 'u3', dueDate: '2026-09-15', members: ['u3'], createdAt: '2026-08-02T10:00:00Z' },
-  { id: 'p3', name: 'Test Payment Gateway', priority: 'medium', lead: 'u4', dueDate: '2026-09-18', members: ['u1', 'u4'], createdAt: '2026-08-03T10:00:00Z' },
-];
+const seedTasks: Task[] = [];
+const seedProjects: Project[] = [];
 
 // ── Initial State ──────────────────────────────────────────────────────────
 
@@ -226,19 +161,20 @@ export function AppProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     async function loadFromApi() {
       try {
+        if (!state.user.id) return;
         const [apiTasks, apiProjects] = await Promise.all([
           api.getTasks(),
           api.getProjects()
         ]);
-        if (apiTasks.length > 0) {
-          dispatch({ type: 'SET_STATE', payload: { ...state, tasks: apiTasks as Task[], projects: apiProjects as Project[] } });
-        }
+        
+        dispatch({ type: 'SET_STATE', payload: { ...state, tasks: apiTasks as Task[], projects: apiProjects as Project[] } });
+        
       } catch (err) {
         console.error('Failed to load from backend API', err);
       }
     }
     loadFromApi();
-  }, []);
+  }, [state.user.id]);
 
   const enhancedDispatch = React.useCallback((action: Action) => {
     dispatch(action); // Optimistic UI update
@@ -275,6 +211,11 @@ export function AppProvider({ children }: { children: ReactNode }) {
     root.setAttribute('data-theme', state.theme);
     root.setAttribute('data-accent', state.accentColor);
   }, [state.theme, state.accentColor]);
+
+  // Sync API user ID
+  useEffect(() => {
+    api.setUserId(state.user?.id || null);
+  }, [state.user?.id]);
 
   return (
     <AppContext.Provider value={{ state, dispatch: enhancedDispatch as React.Dispatch<Action>, members: seedMembers }}>

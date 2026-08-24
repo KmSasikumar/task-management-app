@@ -3,7 +3,7 @@ import { Prisma } from '@prisma/client';
 export declare class TasksService {
     private prisma;
     constructor(prisma: PrismaService);
-    findAll(projectId?: string): Promise<({
+    findAll(projectId?: string, userId?: string): Promise<({
         comments: ({
             user: {
                 id: string;

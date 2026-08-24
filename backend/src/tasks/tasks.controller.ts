@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Param, Put, Delete, Query } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Put, Delete, Query, Headers } from '@nestjs/common';
 import { TasksService } from './tasks.service';
 import { Prisma } from '@prisma/client';
 
@@ -7,8 +7,8 @@ export class TasksController {
   constructor(private readonly tasksService: TasksService) {}
 
   @Get()
-  findAll(@Query('projectId') projectId?: string) {
-    return this.tasksService.findAll(projectId);
+  findAll(@Query('projectId') projectId?: string, @Headers('x-user-id') userId?: string) {
+    return this.tasksService.findAll(projectId, userId);
   }
 
   @Get(':id')
@@ -17,7 +17,10 @@ export class TasksController {
   }
 
   @Post()
-  create(@Body() data: Prisma.TaskCreateInput) {
+  create(@Body() data: Prisma.TaskCreateInput, @Headers('x-user-id') userId?: string) {
+    if (userId) {
+      data.reporter = { connect: { id: userId } };
+    }
     return this.tasksService.create(data);
   }
 

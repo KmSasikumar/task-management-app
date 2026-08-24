@@ -17,8 +17,16 @@ let TasksService = class TasksService {
     constructor(prisma) {
         this.prisma = prisma;
     }
-    async findAll(projectId) {
-        const where = projectId ? { projectId } : {};
+    async findAll(projectId, userId) {
+        const where = {};
+        if (projectId)
+            where.projectId = projectId;
+        if (userId) {
+            where.OR = [
+                { reporterId: userId },
+                { members: { some: { id: userId } } }
+            ];
+        }
         return this.prisma.task.findMany({
             where,
             include: {

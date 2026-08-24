@@ -20,9 +20,6 @@ let AuthController = class AuthController {
     constructor(authService) {
         this.authService = authService;
     }
-    guestLogin() {
-        return this.authService.guestLogin();
-    }
     async signup(body) {
         if (!body.email || !body.password || !body.name) {
             throw new common_1.BadRequestException('Email, password, and name are required');
@@ -41,12 +38,6 @@ let AuthController = class AuthController {
     }
 };
 exports.AuthController = AuthController;
-__decorate([
-    (0, common_1.Post)('guest'),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
-    __metadata("design:returntype", void 0)
-], AuthController.prototype, "guestLogin", null);
 __decorate([
     (0, common_1.Post)('signup'),
     __param(0, (0, common_1.Body)()),

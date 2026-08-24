@@ -3,7 +3,7 @@ import { Prisma } from '@prisma/client';
 export declare class ProjectsController {
     private readonly projectsService;
     constructor(projectsService: ProjectsService);
-    findAll(): Promise<({
+    findAll(userId?: string): Promise<({
         lead: {
             id: string;
             email: string;
@@ -125,7 +125,7 @@ export declare class ProjectsController {
         dueDate: Date | null;
         leadId: string;
     }>;
-    create(data: Prisma.ProjectCreateInput): Promise<{
+    create(data: Prisma.ProjectCreateInput, userId?: string): Promise<{
         lead: {
             id: string;
             email: string;

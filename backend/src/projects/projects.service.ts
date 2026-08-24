@@ -6,8 +6,17 @@ import { Prisma } from '@prisma/client';
 export class ProjectsService {
   constructor(private prisma: PrismaService) {}
 
-  async findAll() {
+  async findAll(userId?: string) {
+    const where: Prisma.ProjectWhereInput = {};
+    if (userId) {
+      where.OR = [
+        { leadId: userId },
+        { members: { some: { id: userId } } }
+      ];
+    }
+    
     return this.prisma.project.findMany({
+      where,
       include: {
         lead: true,
         members: true

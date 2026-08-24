@@ -36,17 +36,7 @@ export default function LoginPage() {
     }
   }
 
-  async function handleGuest() {
-    try {
-      setLoading(true);
-      const user = await api.guestLogin();
-      dispatch({ type: 'LOGIN', payload: user });
-      router.push('/tasks');
-    } catch (err: any) {
-      setError(err.message || 'Failed to login as guest');
-      setLoading(false);
-    }
-  }
+
 
   function handleGoogle() {
     // Not implemented yet
@@ -57,7 +47,7 @@ export default function LoginPage() {
     <div className="min-h-screen flex flex-col items-center justify-center bg-[#fafafa] px-4">
       
       {/* Logo */}
-      <div className="flex flex-row items-center gap-2 mb-8">
+      <div className="flex flex-row items-center gap-2 mt-12 mb-8">
         <div className="w-8 h-8 bg-[#111827] rounded-xl flex items-center justify-center">
           <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5 text-white" viewBox="0 0 24 24" fill="currentColor">
             <path d="M21.8068 18.2848L13.5528.7565c-.207-.4382-.639-.7273-1.1286-.7541-.5023-.0293-.9523.213-1.2062.6253L2.266 15.1271c-.2773.4518-.2718 1.0091.0158 1.4555l4.3759 6.7786c.2608.4046.7127.6388 1.1823.6388.1332 0 .267-.0188.3987-.0577l12.7019-3.7568c.3891-.1151.7072-.3904.8737-.7553s.1633-.7828-.0075-1.1454zm-1.8481.7519L9.1814 22.2242c-.3292.0975-.6448-.1873-.5756-.5194l3.8501-18.4386c.072-.3448.5486-.3996.699-.0803l7.1288 15.138c.1344.2856-.019.6224-.325.7128z"/>
@@ -117,14 +107,6 @@ export default function LoginPage() {
             {loading ? 'Please wait...' : (isLogin ? 'Login' : 'Sign Up')}
           </button>
 
-          <button
-            onClick={handleGuest}
-            disabled={loading}
-            id="btn-guest-login"
-            className="w-full h-[48px] bg-[#111827] text-white font-medium rounded-full hover:bg-gray-800 transition-colors active:bg-gray-900 text-[15px] disabled:opacity-50"
-          >
-            Continue as Guest
-          </button>
 
           <button
             onClick={handleGoogle}

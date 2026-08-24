@@ -3,7 +3,7 @@ import { Prisma } from '@prisma/client';
 export declare class ProjectsService {
     private prisma;
     constructor(prisma: PrismaService);
-    findAll(): Promise<({
+    findAll(userId?: string): Promise<({
         lead: {
             id: string;
             email: string;

@@ -6,8 +6,16 @@ import { Prisma } from '@prisma/client';
 export class TasksService {
   constructor(private prisma: PrismaService) {}
 
-  async findAll(projectId?: string) {
-    const where = projectId ? { projectId } : {};
+  async findAll(projectId?: string, userId?: string) {
+    const where: Prisma.TaskWhereInput = {};
+    if (projectId) where.projectId = projectId;
+    if (userId) {
+      where.OR = [
+        { reporterId: userId },
+        { members: { some: { id: userId } } }
+      ];
+    }
+    
     return this.prisma.task.findMany({
       where,
       include: {

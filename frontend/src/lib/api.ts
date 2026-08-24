@@ -3,10 +3,10 @@ import type { Task, Project, User, Subtask, Comment } from './types';
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001';
 
 export const api = {
-  async guestLogin(): Promise<User> {
-    const res = await fetch(`${API_URL}/auth/guest`, { method: 'POST' });
-    if (!res.ok) throw new Error('Failed to login');
-    return res.json();
+  userId: null as string | null,
+
+  setUserId(id: string | null) {
+    this.userId = id;
   },
 
   async login(email: string, pass: string): Promise<User> {
@@ -38,7 +38,10 @@ export const api = {
   async updateUser(id: string, user: Partial<User>): Promise<User> {
     const res = await fetch(`${API_URL}/users/${id}`, {
       method: 'PATCH',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 
+        'Content-Type': 'application/json',
+        ...(this.userId ? { 'x-user-id': this.userId } : {})
+      },
       body: JSON.stringify(user),
     });
     if (!res.ok) throw new Error('Failed to update user');
@@ -46,7 +49,11 @@ export const api = {
   },
   
   async getTasks(): Promise<Task[]> {
-    const res = await fetch(`${API_URL}/tasks`);
+    const res = await fetch(`${API_URL}/tasks`, {
+      headers: {
+        ...(this.userId ? { 'x-user-id': this.userId } : {})
+      }
+    });
     if (!res.ok) return [];
     return res.json();
   },
@@ -54,7 +61,10 @@ export const api = {
   async createTask(task: Partial<Task>): Promise<Task> {
     const res = await fetch(`${API_URL}/tasks`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 
+        'Content-Type': 'application/json',
+        ...(this.userId ? { 'x-user-id': this.userId } : {})
+      },
       body: JSON.stringify(task),
     });
     return res.json();
@@ -63,18 +73,30 @@ export const api = {
   async updateTask(id: string, task: Partial<Task>): Promise<Task> {
     const res = await fetch(`${API_URL}/tasks/${id}`, {
       method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 
+        'Content-Type': 'application/json',
+        ...(this.userId ? { 'x-user-id': this.userId } : {})
+      },
       body: JSON.stringify(task),
     });
     return res.json();
   },
   
   async deleteTask(id: string): Promise<void> {
-    await fetch(`${API_URL}/tasks/${id}`, { method: 'DELETE' });
+    await fetch(`${API_URL}/tasks/${id}`, { 
+      method: 'DELETE',
+      headers: {
+        ...(this.userId ? { 'x-user-id': this.userId } : {})
+      }
+    });
   },
 
   async getProjects(): Promise<Project[]> {
-    const res = await fetch(`${API_URL}/projects`);
+    const res = await fetch(`${API_URL}/projects`, {
+      headers: {
+        ...(this.userId ? { 'x-user-id': this.userId } : {})
+      }
+    });
     if (!res.ok) return [];
     return res.json();
   }

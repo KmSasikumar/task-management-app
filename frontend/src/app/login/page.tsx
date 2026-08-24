@@ -1,15 +1,24 @@
 'use client';
 
+import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useApp } from '@/lib/store';
 
 export default function LoginPage() {
   const router = useRouter();
   const { dispatch } = useApp();
+  const [email, setEmail] = useState('');
 
   function handleGuest() {
     dispatch({ type: 'LOGIN' });
     router.push('/tasks');
+  }
+
+  function handleEmailLogin() {
+    if (email.trim()) {
+      dispatch({ type: 'LOGIN' });
+      router.push('/tasks');
+    }
   }
 
   function handleGoogle() {
@@ -41,6 +50,23 @@ export default function LoginPage() {
         </p>
 
         <div className="flex flex-col gap-3">
+          <input 
+            type="email" 
+            placeholder="name@example.com"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            className="w-full h-[48px] px-4 rounded-xl border border-[#E5E5E5] text-[15px] focus:outline-none focus:ring-2 focus:ring-[#111827] focus:border-transparent transition-all mb-2"
+          />
+
+          {email.trim().length > 0 && (
+            <button
+              onClick={handleEmailLogin}
+              className="w-full h-[48px] bg-blue-600 text-white font-medium rounded-full hover:bg-blue-700 transition-colors active:bg-blue-800 text-[15px]"
+            >
+              Login with Email
+            </button>
+          )}
+
           <button
             onClick={handleGuest}
             id="btn-guest-login"

@@ -60,7 +60,8 @@ type Action =
   | { type: 'UPDATE_USER'; payload: Partial<User> }
   | { type: 'ADD_SUBTASK'; payload: { taskId: string; subtask: Subtask } }
   | { type: 'ADD_COMMENT'; payload: { taskId: string; comment: Comment } }
-  | { type: 'UPDATE_TASK_STATUS'; payload: { taskId: string; status: Status } };
+  | { type: 'UPDATE_TASK_STATUS'; payload: { taskId: string; status: Status } }
+  | { type: 'SET_API_DATA'; payload: { tasks: Task[]; projects: Project[] } };
 
 function reducer(state: AppState, action: Action): AppState {
   switch (action.type) {
@@ -116,6 +117,8 @@ function reducer(state: AppState, action: Action): AppState {
             : t
         ),
       };
+    case 'SET_API_DATA':
+      return { ...state, tasks: action.payload.tasks, projects: action.payload.projects };
     default:
       return state;
   }
@@ -161,20 +164,20 @@ export function AppProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     async function loadFromApi() {
       try {
-        if (!state.user.id) return;
+        if (!state.isLoggedIn || !state.user.id) return;
         const [apiTasks, apiProjects] = await Promise.all([
           api.getTasks(),
           api.getProjects()
         ]);
         
-        dispatch({ type: 'SET_STATE', payload: { ...state, tasks: apiTasks as Task[], projects: apiProjects as Project[] } });
+        dispatch({ type: 'SET_API_DATA', payload: { tasks: apiTasks as Task[], projects: apiProjects as Project[] } });
         
       } catch (err) {
         console.error('Failed to load from backend API', err);
       }
     }
     loadFromApi();
-  }, [state.user.id]);
+  }, [state.isLoggedIn, state.user.id]);
 
   const enhancedDispatch = React.useCallback((action: Action) => {
     dispatch(action); // Optimistic UI update

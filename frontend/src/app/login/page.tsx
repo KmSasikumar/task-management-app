@@ -3,27 +3,54 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useApp } from '@/lib/store';
+import { api } from '@/lib/api';
 
 export default function LoginPage() {
   const router = useRouter();
   const { dispatch } = useApp();
+  
+  const [isLogin, setIsLogin] = useState(true);
+  const [name, setName] = useState('');
   const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
 
-  function handleGuest() {
-    dispatch({ type: 'LOGIN' });
-    router.push('/tasks');
+  async function handleAuth() {
+    if (!email.trim() || !password.trim() || (!isLogin && !name.trim())) return;
+    
+    setLoading(true);
+    setError('');
+    
+    try {
+      const user = isLogin 
+        ? await api.login(email, password)
+        : await api.signup(name, email, password);
+        
+      dispatch({ type: 'LOGIN', payload: user });
+      router.push('/tasks');
+    } catch (err: any) {
+      setError(err.message || 'An error occurred during authentication');
+    } finally {
+      setLoading(false);
+    }
   }
 
-  function handleEmailLogin() {
-    if (email.trim()) {
-      dispatch({ type: 'LOGIN' });
+  async function handleGuest() {
+    try {
+      setLoading(true);
+      const user = await api.guestLogin();
+      dispatch({ type: 'LOGIN', payload: user });
       router.push('/tasks');
+    } catch (err: any) {
+      setError(err.message || 'Failed to login as guest');
+      setLoading(false);
     }
   }
 
   function handleGoogle() {
-    dispatch({ type: 'LOGIN' });
-    router.push('/tasks');
+    // Not implemented yet
+    setError('Google login is not implemented yet.');
   }
 
   return (
@@ -43,42 +70,67 @@ export default function LoginPage() {
       <div className="w-full max-w-[420px] flex flex-col bg-white border border-[#E5E5E5] rounded-[24px] p-8 shadow-sm">
         
         <h1 className="text-[24px] font-bold text-[#111827] text-center tracking-tight mb-2">
-          Let&apos;s get back on track
+          {isLogin ? "Let's get back on track" : "Create an account"}
         </h1>
-        <p className="text-[15px] text-[#6b7280] text-center mb-8">
-          Enter your email below to login to your account.
+        <p className="text-[15px] text-[#6b7280] text-center mb-6">
+          {isLogin ? "Enter your email and password below to login." : "Enter your details below to sign up."}
         </p>
 
+        {error && (
+          <div className="mb-4 p-3 bg-red-50 border border-red-200 text-red-600 rounded-lg text-sm text-center">
+            {error}
+          </div>
+        )}
+
         <div className="flex flex-col gap-3">
+          {!isLogin && (
+            <input 
+              type="text" 
+              placeholder="Full Name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              className="w-full h-[48px] px-4 rounded-xl border border-[#E5E5E5] text-[15px] focus:outline-none focus:ring-2 focus:ring-[#111827] focus:border-transparent transition-all"
+            />
+          )}
+
           <input 
             type="email" 
-            placeholder="name@example.com"
+            placeholder="E mail😊"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            className="w-full h-[48px] px-4 rounded-xl border border-[#E5E5E5] text-[15px] focus:outline-none focus:ring-2 focus:ring-[#111827] focus:border-transparent transition-all"
+          />
+
+          <input 
+            type="password" 
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
             className="w-full h-[48px] px-4 rounded-xl border border-[#E5E5E5] text-[15px] focus:outline-none focus:ring-2 focus:ring-[#111827] focus:border-transparent transition-all mb-2"
           />
 
-          {email.trim().length > 0 && (
-            <button
-              onClick={handleEmailLogin}
-              className="w-full h-[48px] bg-blue-600 text-white font-medium rounded-full hover:bg-blue-700 transition-colors active:bg-blue-800 text-[15px]"
-            >
-              Login with Email
-            </button>
-          )}
+          <button
+            onClick={handleAuth}
+            disabled={loading}
+            className="w-full h-[48px] bg-blue-600 text-white font-medium rounded-full hover:bg-blue-700 transition-colors active:bg-blue-800 text-[15px] disabled:opacity-50"
+          >
+            {loading ? 'Please wait...' : (isLogin ? 'Login' : 'Sign Up')}
+          </button>
 
           <button
             onClick={handleGuest}
+            disabled={loading}
             id="btn-guest-login"
-            className="w-full h-[48px] bg-[#111827] text-white font-medium rounded-full hover:bg-gray-800 transition-colors active:bg-gray-900 text-[15px]"
+            className="w-full h-[48px] bg-[#111827] text-white font-medium rounded-full hover:bg-gray-800 transition-colors active:bg-gray-900 text-[15px] disabled:opacity-50"
           >
             Continue as Guest
           </button>
 
           <button
             onClick={handleGoogle}
+            disabled={loading}
             id="btn-google-login"
-            className="w-full h-[48px] bg-white text-[#111827] font-medium rounded-full border border-[#eaeaea] hover:bg-gray-50 transition-colors active:bg-gray-100 flex items-center justify-center gap-2 text-[15px]"
+            className="w-full h-[48px] bg-white text-[#111827] font-medium rounded-full border border-[#eaeaea] hover:bg-gray-50 transition-colors active:bg-gray-100 flex items-center justify-center gap-2 text-[15px] disabled:opacity-50"
           >
             <svg className="w-[18px] h-[18px] text-[#111827]" viewBox="0 0 24 24" fill="currentColor">
               <path d="M12.545,10.239v3.821h5.445c-0.712,2.315-2.647,3.972-5.445,3.972c-3.332,0-6.033-2.701-6.033-6.032s2.701-6.032,6.033-6.032c1.498,0,2.866,0.549,3.921,1.453l2.814-2.814C17.503,2.988,15.139,2,12.545,2C7.021,2,2.543,6.477,2.543,12s4.478,10,10.002,10c8.396,0,10.249-7.85,9.426-11.761H12.545z"/>
@@ -87,6 +139,20 @@ export default function LoginPage() {
           </button>
         </div>
       </div>
+
+      {/* Toggle Login/Signup */}
+      <p className="mt-6 text-[14px] text-[#6b7280]">
+        {isLogin ? "Don't have an account? " : "Already have an account? "}
+        <button 
+          onClick={() => {
+            setIsLogin(!isLogin);
+            setError('');
+          }}
+          className="text-[#111827] font-medium hover:underline focus:outline-none"
+        >
+          {isLogin ? 'Sign up' : 'Log in'}
+        </button>
+      </p>
 
       {/* Footer */}
       <p className="text-[14px] text-[#6b7280] text-center mt-8 leading-relaxed">

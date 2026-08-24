@@ -5,6 +5,7 @@ export declare class UsersController {
     update(id: string, updateData: any): Promise<{
         id: string;
         email: string;
+        password: string | null;
         name: string;
         avatar: string | null;
         title: string | null;

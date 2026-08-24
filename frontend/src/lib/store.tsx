@@ -108,7 +108,7 @@ const defaultState: AppState = {
 
 type Action =
   | { type: 'SET_STATE'; payload: AppState }
-  | { type: 'LOGIN' }
+  | { type: 'LOGIN'; payload: User }
   | { type: 'LOGOUT' }
   | { type: 'SET_VIEW_MODE'; payload: ViewMode }
   | { type: 'SET_THEME'; payload: ThemeMode }
@@ -132,7 +132,7 @@ function reducer(state: AppState, action: Action): AppState {
     case 'SET_STATE':
       return action.payload;
     case 'LOGIN':
-      return { ...state, isLoggedIn: true };
+      return { ...state, isLoggedIn: true, user: action.payload };
     case 'LOGOUT':
       return { ...defaultState };
     case 'SET_VIEW_MODE':

@@ -7,6 +7,7 @@ export declare class ProjectsService {
         lead: {
             id: string;
             email: string;
+            password: string | null;
             name: string;
             avatar: string | null;
             title: string | null;
@@ -18,6 +19,7 @@ export declare class ProjectsService {
         members: {
             id: string;
             email: string;
+            password: string | null;
             name: string;
             avatar: string | null;
             title: string | null;
@@ -39,6 +41,7 @@ export declare class ProjectsService {
         lead: {
             id: string;
             email: string;
+            password: string | null;
             name: string;
             avatar: string | null;
             title: string | null;
@@ -50,6 +53,7 @@ export declare class ProjectsService {
         members: {
             id: string;
             email: string;
+            password: string | null;
             name: string;
             avatar: string | null;
             title: string | null;
@@ -63,6 +67,7 @@ export declare class ProjectsService {
                 user: {
                     id: string;
                     email: string;
+                    password: string | null;
                     name: string;
                     avatar: string | null;
                     title: string | null;
@@ -81,6 +86,7 @@ export declare class ProjectsService {
             members: {
                 id: string;
                 email: string;
+                password: string | null;
                 name: string;
                 avatar: string | null;
                 title: string | null;
@@ -123,6 +129,7 @@ export declare class ProjectsService {
         lead: {
             id: string;
             email: string;
+            password: string | null;
             name: string;
             avatar: string | null;
             title: string | null;
@@ -134,6 +141,7 @@ export declare class ProjectsService {
         members: {
             id: string;
             email: string;
+            password: string | null;
             name: string;
             avatar: string | null;
             title: string | null;
@@ -155,6 +163,7 @@ export declare class ProjectsService {
         lead: {
             id: string;
             email: string;
+            password: string | null;
             name: string;
             avatar: string | null;
             title: string | null;
@@ -166,6 +175,7 @@ export declare class ProjectsService {
         members: {
             id: string;
             email: string;
+            password: string | null;
             name: string;
             avatar: string | null;
             title: string | null;

@@ -8,6 +8,7 @@ export declare class TasksService {
             user: {
                 id: string;
                 email: string;
+                password: string | null;
                 name: string;
                 avatar: string | null;
                 title: string | null;
@@ -26,6 +27,7 @@ export declare class TasksService {
         members: {
             id: string;
             email: string;
+            password: string | null;
             name: string;
             avatar: string | null;
             title: string | null;
@@ -37,6 +39,7 @@ export declare class TasksService {
         reporter: {
             id: string;
             email: string;
+            password: string | null;
             name: string;
             avatar: string | null;
             title: string | null;
@@ -71,6 +74,7 @@ export declare class TasksService {
             user: {
                 id: string;
                 email: string;
+                password: string | null;
                 name: string;
                 avatar: string | null;
                 title: string | null;
@@ -89,6 +93,7 @@ export declare class TasksService {
         members: {
             id: string;
             email: string;
+            password: string | null;
             name: string;
             avatar: string | null;
             title: string | null;
@@ -100,6 +105,7 @@ export declare class TasksService {
         reporter: {
             id: string;
             email: string;
+            password: string | null;
             name: string;
             avatar: string | null;
             title: string | null;
@@ -140,6 +146,7 @@ export declare class TasksService {
         members: {
             id: string;
             email: string;
+            password: string | null;
             name: string;
             avatar: string | null;
             title: string | null;
@@ -151,6 +158,7 @@ export declare class TasksService {
         reporter: {
             id: string;
             email: string;
+            password: string | null;
             name: string;
             avatar: string | null;
             title: string | null;
@@ -191,6 +199,7 @@ export declare class TasksService {
         members: {
             id: string;
             email: string;
+            password: string | null;
             name: string;
             avatar: string | null;
             title: string | null;
@@ -202,6 +211,7 @@ export declare class TasksService {
         reporter: {
             id: string;
             email: string;
+            password: string | null;
             name: string;
             avatar: string | null;
             title: string | null;

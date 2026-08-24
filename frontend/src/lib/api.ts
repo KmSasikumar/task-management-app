@@ -9,6 +9,32 @@ export const api = {
     return res.json();
   },
 
+  async login(email: string, pass: string): Promise<User> {
+    const res = await fetch(`${API_URL}/auth/login`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password: pass }),
+    });
+    if (!res.ok) {
+      const error = await res.json();
+      throw new Error(error.message || 'Failed to login');
+    }
+    return res.json();
+  },
+
+  async signup(name: string, email: string, pass: string): Promise<User> {
+    const res = await fetch(`${API_URL}/auth/signup`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name, email, password: pass }),
+    });
+    if (!res.ok) {
+      const error = await res.json();
+      throw new Error(error.message || 'Failed to sign up');
+    }
+    return res.json();
+  },
+
   async updateUser(id: string, user: Partial<User>): Promise<User> {
     const res = await fetch(`${API_URL}/users/${id}`, {
       method: 'PATCH',

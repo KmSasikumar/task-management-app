@@ -7,6 +7,7 @@ export declare class CommentsController {
         user: {
             id: string;
             email: string;
+            password: string | null;
             name: string;
             avatar: string | null;
             title: string | null;

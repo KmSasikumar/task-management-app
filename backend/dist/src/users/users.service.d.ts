@@ -5,6 +5,7 @@ export declare class UsersService {
     findAll(): Promise<{
         id: string;
         email: string;
+        password: string | null;
         name: string;
         avatar: string | null;
         title: string | null;
@@ -16,6 +17,7 @@ export declare class UsersService {
     findOne(id: string): Promise<{
         id: string;
         email: string;
+        password: string | null;
         name: string;
         avatar: string | null;
         title: string | null;
@@ -27,6 +29,7 @@ export declare class UsersService {
     findByEmail(email: string): Promise<{
         id: string;
         email: string;
+        password: string | null;
         name: string;
         avatar: string | null;
         title: string | null;
@@ -38,6 +41,7 @@ export declare class UsersService {
     create(data: {
         name: string;
         email: string;
+        password?: string;
         avatar?: string;
         title?: string;
         username?: string;
@@ -45,6 +49,7 @@ export declare class UsersService {
     }): Promise<{
         id: string;
         email: string;
+        password: string | null;
         name: string;
         avatar: string | null;
         title: string | null;
@@ -56,6 +61,7 @@ export declare class UsersService {
     update(id: string, data: any): Promise<{
         id: string;
         email: string;
+        password: string | null;
         name: string;
         avatar: string | null;
         title: string | null;

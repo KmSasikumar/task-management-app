@@ -1,9 +1,14 @@
 import type { Task, Project, User, Subtask, Comment } from './types';
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 
-  (typeof window !== 'undefined' && window.location.hostname !== 'localhost' 
-    ? 'https://task-management-backend-a915.onrender.com' 
-    : 'http://localhost:3001');
+const API_URL = (() => {
+  let url = process.env.NEXT_PUBLIC_API_URL;
+  if (!url || url === '/') {
+    return typeof window !== 'undefined' && window.location.hostname !== 'localhost'
+      ? 'https://task-management-backend-a915.onrender.com'
+      : 'http://localhost:3001';
+  }
+  return url.replace(/\/$/, '');
+})();
 
 export const api = {
   userId: null as string | null,

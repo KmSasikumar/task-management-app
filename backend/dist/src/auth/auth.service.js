@@ -51,6 +51,18 @@ let AuthService = class AuthService {
     constructor(usersService) {
         this.usersService = usersService;
     }
+    async guestLogin() {
+        let user = await this.usersService.findByEmail('Kommamani012@gmail.com');
+        if (!user) {
+            user = await this.usersService.create({
+                name: 'Sasikumar',
+                email: 'Kommamani012@gmail.com',
+                initials: 'S',
+            });
+        }
+        const { password, ...result } = user;
+        return result;
+    }
     async signup(email, pass, name) {
         const existing = await this.usersService.findByEmail(email);
         if (existing) {

@@ -9,6 +9,12 @@ export const api = {
     this.userId = id;
   },
 
+  async guestLogin(): Promise<User> {
+    const res = await fetch(`${API_URL}/auth/guest`, { method: 'POST' });
+    if (!res.ok) throw new Error('Failed to login as guest');
+    return res.json();
+  },
+
   async login(email: string, pass: string): Promise<User> {
     const res = await fetch(`${API_URL}/auth/login`, {
       method: 'POST',

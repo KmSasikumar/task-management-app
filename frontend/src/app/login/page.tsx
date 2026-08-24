@@ -35,9 +35,17 @@ export default function LoginPage() {
       setLoading(false);
     }
   }
-
-
-
+  async function handleGuest() {
+    try {
+      setLoading(true);
+      const user = await api.guestLogin();
+      dispatch({ type: 'LOGIN', payload: user });
+      router.push('/tasks');
+    } catch (err: any) {
+      setError(err.message || 'Failed to login as guest');
+      setLoading(false);
+    }
+  }
   function handleGoogle() {
     // Not implemented yet
     setError('Google login is not implemented yet.');
@@ -107,7 +115,14 @@ export default function LoginPage() {
             {loading ? 'Please wait...' : (isLogin ? 'Login' : 'Sign Up')}
           </button>
 
-
+          <button
+            onClick={handleGuest}
+            disabled={loading}
+            id="btn-guest-login"
+            className="w-full h-[48px] bg-[#111827] text-white font-medium rounded-full hover:bg-gray-800 transition-colors active:bg-gray-900 text-[15px] disabled:opacity-50"
+          >
+            Continue as Guest
+          </button>
           <button
             onClick={handleGoogle}
             disabled={loading}

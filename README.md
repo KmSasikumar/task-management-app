@@ -6,7 +6,7 @@ This is a Full Stack Task Management System built as part of the technical asses
 
 * **Frontend:** Next.js (App Router), Tailwind CSS, Lucide Icons, Custom React Context for State Management.
 * **Backend:** NestJS REST API.
-* **Database:** SQLite with Prisma ORM.
+* **Database:** PostgreSQL with Prisma ORM.
 
 ## Setup Instructions
 
@@ -20,10 +20,11 @@ This is a Full Stack Task Management System built as part of the technical asses
    ```bash
    npm install
    ```
-3. Generate the Prisma client and seed the database:
+3. Set `DATABASE_URL` in `backend/.env` (see `backend/.env.example`), then generate the Prisma client, create the tables, and seed the database:
    ```bash
    npx prisma generate
-   npx ts-node prisma/seed.ts
+   npx prisma db push
+   npx prisma db seed
    ```
 4. Start the backend development server:
    ```bash
@@ -58,7 +59,7 @@ This is a Full Stack Task Management System built as part of the technical asses
 * Next.js App Router
 * TailwindCSS
 * NestJS
-* Prisma + SQLite
+* Prisma + PostgreSQL
 * TypeScript
 
 ## Future Improvements

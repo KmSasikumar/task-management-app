@@ -1,6 +1,10 @@
 import { PrismaClient } from '@prisma/client';
+import { PrismaPg } from '@prisma/adapter-pg';
 
-const prisma = new PrismaClient();
+// Prisma 7 requires a driver adapter — a bare `new PrismaClient()` throws
+// PrismaClientInitializationError. Mirror src/prisma/prisma.service.ts.
+const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL });
+const prisma = new PrismaClient({ adapter });
 
 async function main() {
   const u1 = await prisma.user.upsert({

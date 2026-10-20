@@ -1,13 +1,15 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { Prisma } from '@prisma/client';
+import { withoutPassword } from '../common/sanitize-user';
 
 @Injectable()
 export class CommentsService {
   constructor(private prisma: PrismaService) {}
 
   async create(data: Prisma.CommentCreateInput) {
-    return this.prisma.comment.create({ data, include: { user: true } });
+    const comment = await this.prisma.comment.create({ data, include: { user: true } });
+    return { ...comment, user: withoutPassword(comment.user) };
   }
 
   async remove(id: string) {

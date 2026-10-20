@@ -1,5 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
+import { withoutPassword } from '../common/sanitize-user';
 
 @Injectable()
 export class UsersService {
@@ -24,9 +25,10 @@ export class UsersService {
   }
 
   async update(id: string, data: any) {
-    return this.prisma.user.update({
+    const user = await this.prisma.user.update({
       where: { id },
       data,
     });
+    return withoutPassword(user);
   }
 }

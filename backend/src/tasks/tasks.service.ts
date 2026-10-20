@@ -1,6 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { Prisma } from '@prisma/client';
+import { sanitizeTask } from '../common/sanitize-user';
 
 @Injectable()
 export class TasksService {
@@ -16,7 +17,7 @@ export class TasksService {
       ];
     }
     
-    return this.prisma.task.findMany({
+    const tasks = await this.prisma.task.findMany({
       where,
       include: {
         reporter: true,
@@ -25,6 +26,7 @@ export class TasksService {
         comments: { include: { user: true } }
       }
     });
+    return tasks.map((t) => sanitizeTask(t));
   }
 
   async findOne(id: string) {
@@ -38,25 +40,28 @@ export class TasksService {
       }
     });
     if (!task) throw new NotFoundException('Task not found');
-    return task;
+    return sanitizeTask(task);
   }
 
   async create(data: Prisma.TaskCreateInput) {
-    return this.prisma.task.create({
+    const task = await this.prisma.task.create({
       data,
       include: { reporter: true, members: true, subtasks: true, comments: true }
     });
+    return sanitizeTask(task);
   }
 
   async update(id: string, data: Prisma.TaskUpdateInput) {
-    return this.prisma.task.update({
+    const task = await this.prisma.task.update({
       where: { id },
       data,
       include: { reporter: true, members: true, subtasks: true, comments: true }
     });
+    return sanitizeTask(task);
   }
 
   async remove(id: string) {
-    return this.prisma.task.delete({ where: { id } });
+    const task = await this.prisma.task.delete({ where: { id } });
+    return sanitizeTask(task);
   }
 }

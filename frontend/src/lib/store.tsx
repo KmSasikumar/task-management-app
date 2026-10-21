@@ -202,7 +202,10 @@ export function AppProvider({ children }: { children: ReactNode }) {
         console.error('API Sync Error', err);
       }
     }, 0);
-  }, []);
+    // state.user.id is read for UPDATE_USER sync: with an empty dep array the
+    // closure kept the FIRST render's user, so after logging in as a
+    // different user, profile updates were PATCHed to the stale user id.
+  }, [state.user.id]);
 
   useEffect(() => {
     saveState(state);

@@ -3,3 +3,10 @@ node_modules
 .env
 
 /generated/prisma
+
+# Build output (was committed to the repo: 79 tracked files under dist/)
+dist/
+
+# Local database files (a stale pre-PostgreSQL dev.db was committed)
+*.db
+*.db-journal

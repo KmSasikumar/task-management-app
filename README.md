@@ -8,6 +8,19 @@ This is a Full Stack Task Management System built as part of the technical asses
 * **Backend:** NestJS REST API.
 * **Database:** PostgreSQL with Prisma ORM.
 
+## Live Demo
+
+**Status: not live yet — blocked on a hosting-plan limit, not on the code.** Both halves are packaged and verified (production builds pass; every API flow was exercised against PostgreSQL in the debug cycle):
+
+* Frontend: https://task-management.antideploy.app (Antideploy app created)
+* API: https://task-management-api.antideploy.app (Antideploy app created, PostgreSQL provisioned, connection string injected by the platform as `DATABASE_URL`)
+
+The Antideploy free plan allows **one** live server app per account, and that slot is currently taken by the Lead Management Platform. Putting this app live needs an owner decision (free the slot or upgrade the plan); the deploy itself is then a re-run with no code changes — backend from `backend/` with `FRONTEND_URL` + `NODE_ENV` as deploy env, frontend from `frontend/` with `NEXT_PUBLIC_API_URL` pointing at the API URL above. The frontend's built-in production fallback now uses the Antideploy API URL (it previously pointed at the dead Render backend).
+
+The older Render deployment (`render.yaml`, still accurate) is dead for a platform reason: its free PostgreSQL passed Render's 30-day free-database expiry, so the backend's start command (`prisma db push && …`) can never finish booting. A fresh free database in the Render dashboard revives it.
+
+Honest limits: the database starts empty — run `npx prisma db seed` in `backend/` for demo data (2 users, 1 project, 1 task), or just sign up / use guest login; auth is a simple user-object flow (no JWT yet, see Future Improvements).
+
 ## Setup Instructions
 
 ### 1. Start the Backend

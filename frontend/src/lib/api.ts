@@ -4,7 +4,7 @@ const API_URL = (() => {
   let url = process.env.NEXT_PUBLIC_API_URL;
   if (!url || url === '/') {
     return typeof window !== 'undefined' && window.location.hostname !== 'localhost'
-      ? 'https://task-management-backend-a915.onrender.com'
+      ? 'https://task-management-api.antideploy.app'
       : 'http://localhost:3001';
   }
   return url.replace(/\/$/, '');

@@ -1,6 +1,10 @@
 import { PrismaClient } from '@prisma/client';
+import { PrismaPg } from '@prisma/adapter-pg';
 
-const prisma = new PrismaClient();
+// Prisma 7 requires a driver adapter — a bare `new PrismaClient()` throws
+// PrismaClientInitializationError. Mirror src/prisma/prisma.service.ts.
+const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL });
+const prisma = new PrismaClient({ adapter });
 
 async function main() {
   const u1 = await prisma.user.upsert({
@@ -12,14 +16,21 @@ async function main() {
       email: 'dexter@gmail.com',
       title: 'Designer',
       username: 'Dexuser',
-      initials: 'DX'
-    }
+      initials: 'DX',
+    },
   });
 
   const u2 = await prisma.user.upsert({
     where: { email: 'ankit@gmail.com' },
     update: {},
-    create: { id: 'u2', name: 'Ankit Dutta', email: 'ankit@gmail.com', title: 'Developer', username: 'ankit', initials: 'AD' }
+    create: {
+      id: 'u2',
+      name: 'Ankit Dutta',
+      email: 'ankit@gmail.com',
+      title: 'Developer',
+      username: 'ankit',
+      initials: 'AD',
+    },
   });
 
   const p1 = await prisma.project.upsert({
@@ -31,7 +42,7 @@ async function main() {
       priority: 'high',
       leadId: u1.id,
       dueDate: new Date('2026-09-12'),
-    }
+    },
   });
 
   await prisma.task.upsert({
@@ -46,15 +57,15 @@ async function main() {
       reporterId: u1.id,
       projectId: p1.id,
       dueDate: new Date('2026-07-29'),
-      labels: 'Research,Design,Development'
-    }
+      labels: 'Research,Design,Development',
+    },
   });
 
   console.log('Database seeded!');
 }
 
 main()
-  .catch(e => {
+  .catch((e) => {
     console.error(e);
     process.exit(1);
   })

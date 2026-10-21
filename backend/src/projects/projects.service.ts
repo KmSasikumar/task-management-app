@@ -1,6 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { Prisma } from '@prisma/client';
+import { sanitizeProject } from '../common/sanitize-user';
 
 @Injectable()
 export class ProjectsService {
@@ -9,19 +10,17 @@ export class ProjectsService {
   async findAll(userId?: string) {
     const where: Prisma.ProjectWhereInput = {};
     if (userId) {
-      where.OR = [
-        { leadId: userId },
-        { members: { some: { id: userId } } }
-      ];
+      where.OR = [{ leadId: userId }, { members: { some: { id: userId } } }];
     }
-    
-    return this.prisma.project.findMany({
+
+    const projects = await this.prisma.project.findMany({
       where,
       include: {
         lead: true,
-        members: true
-      }
+        members: true,
+      },
     });
+    return projects.map((pr) => sanitizeProject(pr));
   }
 
   async findOne(id: string) {
@@ -34,24 +33,34 @@ export class ProjectsService {
           include: {
             members: true,
             subtasks: true,
-            comments: { include: { user: true } }
-          }
-        }
-      }
+            comments: { include: { user: true } },
+          },
+        },
+      },
     });
     if (!project) throw new NotFoundException('Project not found');
-    return project;
+    return sanitizeProject(project);
   }
 
   async create(data: Prisma.ProjectCreateInput) {
-    return this.prisma.project.create({ data, include: { lead: true, members: true } });
+    const project = await this.prisma.project.create({
+      data,
+      include: { lead: true, members: true },
+    });
+    return sanitizeProject(project);
   }
 
   async update(id: string, data: Prisma.ProjectUpdateInput) {
-    return this.prisma.project.update({ where: { id }, data, include: { lead: true, members: true } });
+    const project = await this.prisma.project.update({
+      where: { id },
+      data,
+      include: { lead: true, members: true },
+    });
+    return sanitizeProject(project);
   }
 
   async remove(id: string) {
-    return this.prisma.project.delete({ where: { id } });
+    const project = await this.prisma.project.delete({ where: { id } });
+    return sanitizeProject(project);
   }
 }
